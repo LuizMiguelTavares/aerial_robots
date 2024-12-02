@@ -37,15 +37,15 @@ public:
         nh_.param("theta_phi_max_deg", max_theta_phi_deg_, 15.0);
         nh_.param("z_dot_max", max_z_dot_, 1.0);
         nh_.param("yaw_dot_max_deg", max_yaw_dot_deg_, 100.0);
-        nh_.param("Angular_frequency", w_, 2 * M_PI / 20); // Angular frequency
+        nh_.param("Angular_frequency", w_, 2 * M_PI / 20);
 
         // Task
         nh_.param("task", task_, 1); // 1: Positioning, 2: Circular trajectory, 3: Lemniscate trajectory, 4: Pringles trajectory
 
         pose_sub_ = nh_.subscribe(pose_topic_, 1, &DroneController::poseCallback, this);
-        cmd_pub_ = nh_.advertise<geometry_msgs::Twist>("/B1/cmd_vel", 1);
-        takeoff_pub_ = nh_.advertise<std_msgs::Empty>("/B1/takeoff", 1);
-        land_pub_ = nh_.advertise<std_msgs::Empty>("/B1/land", 1);
+        cmd_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_vel_topic_, 1);
+        takeoff_pub_ = nh_.advertise<std_msgs::Empty>(takeoff_topic_, 1);
+        land_pub_ = nh_.advertise<std_msgs::Empty>(land_topic_, 1);
         
         if (save_data_)
         {   
