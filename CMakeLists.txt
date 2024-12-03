@@ -9,12 +9,19 @@ project(aerial_robotics)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  std_msgs
   geometry_msgs
-  tf
+  nav_msgs
+  sensor_msgs
+  tf2
+  tf2_geometry_msgs
+  Eigen3
+  roslib
 )
+
 ## System dependencies are found with CMake's conventions
 find_package(Eigen3 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS filesystem)
+
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -102,12 +109,17 @@ find_package(Eigen3 REQUIRED)
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+# catkin_package(
+# #  INCLUDE_DIRS include
+# #  LIBRARIES aerial_robotics
+# #  CATKIN_DEPENDS roscpp rospy
+# #  DEPENDS system_lib
+# )
+
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES aerial_robotics
-#  CATKIN_DEPENDS roscpp rospy
-#  DEPENDS system_lib
+  CATKIN_DEPENDS roscpp geometry_msgs nav_msgs sensor_msgs tf2 tf2_geometry_msgs roslib
 )
+
 
 ###########
 ## Build ##
@@ -119,6 +131,7 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library

@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="aerial_robotics" type="drone_controller" name="drone_controller" output="screen" >    
+        <rosparam file="$(find aerial_robotics)/config/drone_config.yaml"/>
+    </node>
+</launch>

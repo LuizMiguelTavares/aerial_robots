@@ -55,7 +55,18 @@
   <build_export_depend>rospy</build_export_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
-
+  <build_depend>geometry_msgs</build_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <build_depend>nav_msgs</build_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <build_depend>tf2</build_depend>
+  <exec_depend>tf2</exec_depend>
+  <build_depend>tf2_geometry_msgs</build_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <build_depend>roslib</build_depend>
+  <exec_depend>roslib</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
