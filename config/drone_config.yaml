@@ -7,7 +7,7 @@ takeoff_topic: "/B1/takeoff"
 land_topic: "/B1/land"
 control_frequency: 30.0
 time_without_pose: 0.5
-dont_takeoff: true
+dont_takeoff: false
 
 # Wall Limits
 x_wall_min: -1.5
@@ -17,20 +17,20 @@ y_wall_max: 1.5
 z_wall_max: 2.0
 
 # Gains
-Kp_x: 1.0
-Kp_y: 1.0
-Kd_x: 1.0
-Kd_y: 1.0
+Kp_x: 4.0
+Kp_y: 4.0
+Kd_x: 3.0
+Kd_y: 3.0
 Ki_x: 0.0
 Ki_y: 0.0
 K_z: 1.0
-K_yaw: 5.0
+K_yaw: 3.0
 alpha_velocity_gain: 0.4
-theta_phi_max_deg: 15.0
+theta_phi_max_deg: 5.0
 z_dot_max: 1.0
 yaw_dot_max_deg: 100.0
-Angular_frequency: 0.314159265  # 2 * pi / 20
+Angular_frequency: 0.41887902047  # 2 * pi / 15
 joystick_deadzone: 0.05
 
 # Task
-task: 1  # 1: Positioning, 2: Circular trajectory, 3: Lemniscate trajectory, 4: Pringles trajectory
+task: 4  # 1: Positioning, 2: Circular trajectory, 3: Lemniscate trajectory, 4: Pringles trajectory

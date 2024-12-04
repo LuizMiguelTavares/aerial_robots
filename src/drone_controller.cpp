@@ -94,7 +94,6 @@ private:
     {
         std::lock_guard<std::mutex> lock(state_mutex_);
         ros::Time current_time = msg->header.stamp;
-        last_pose_time_ = ros::Time::now();
 
         if (there_is_pose_ == false)
         {   
@@ -115,6 +114,10 @@ private:
 
         current_position_ = Eigen::Vector3d(msg->pose.position.x, msg->pose.position.y, msg->pose.position.z);
         tf2::fromMsg(msg->pose.orientation, current_orientation_);
+
+        if (!(previous_position_ == current_position_)){
+            last_pose_time_ = ros::Time::now();
+        }
 
         if (dt > 0.0)
         {
@@ -177,7 +180,7 @@ private:
             
         }
 
-        if ((ros::Time::now() - last_pose_time_) > ros::Duration(time_without_pose_))
+        if ((ros::Time::now() - last_pose_time_).toSec() > time_without_pose_)
         {
             ROS_WARN_STREAM("No pose received in the last " << time_without_pose_ << " seconds. Stopping the drone.");
             emergencyStop();
@@ -225,7 +228,7 @@ private:
 
             ROS_INFO("X: %f, Y: %f, Z: %f, Yaw: %f", cmd_msg.linear.x, cmd_msg.linear.y, cmd_msg.linear.z, cmd_msg.angular.z);
 
-            // cmd_pub_.publish(cmd_msg);
+            cmd_pub_.publish(cmd_msg);
             return;
         }
 
@@ -244,7 +247,6 @@ private:
 
         if (save_data_ && csv_file_.is_open())
         {
-            ROS_INFO("Saving data to CSV file.");
             csv_file_ << t << ","
                       << current_position(0) << "," << current_position(1) << "," << current_position(2) << ","
                       << current_velocity(0) << "," << current_velocity(1) << "," << current_velocity(2) << ", "
@@ -291,14 +293,14 @@ private:
         geometry_msgs::Twist cmd_msg;
 
         // Assuming the drone accepts roll and pitch angles in angular.x and angular.y
-        // cmd_msg.linear.x = theta_phi_ref(0); // Roll angle (theta)
-        // cmd_msg.linear.y = -theta_phi_ref(1); // Pitch angle (phi)
-        // cmd_msg.linear.z = Z_dot_ref;         // Vertical velocity
-        // cmd_msg.angular.z = yaw_dot_ref;      // Yaw rate
+        cmd_msg.linear.x = theta_phi_ref(0); // Roll angle (theta)
+        cmd_msg.linear.y = -theta_phi_ref(1); // Pitch angle (phi)
+        cmd_msg.linear.z = Z_dot_ref;         // Vertical velocity
+        cmd_msg.angular.z = yaw_dot_ref;      // Yaw rate
 
         ROS_INFO("X: %f, Y: %f, Z : %f, Yaw: %f", theta_phi_ref(0), -theta_phi_ref(1), Z_dot_ref, yaw_dot_ref);
 
-        // cmd_pub_.publish(cmd_msg);
+        cmd_pub_.publish(cmd_msg);
     }
 
     void emergencyStop()
