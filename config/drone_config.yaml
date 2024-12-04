@@ -1,5 +1,6 @@
 # General Parameters
 save_data: true
+use_second_order_filter_for_velocity: true
 pose_topic: "/natnet_ros/B1/pose"
 cmd_vel_topic: "/B1/cmd_vel"
 joystick_topic: "/joy"
